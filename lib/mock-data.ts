@@ -1,0 +1,215 @@
+import type {
+  AISuggestion,
+  DashboardMetric,
+  Evaluation,
+  Incident,
+  StaffProfile,
+  SurveyTemplate,
+} from "@/lib/types";
+
+export const dashboardMetrics: DashboardMetric[] = [
+  {
+    label: "Active staff",
+    value: "42",
+    helper: "6 seasonal staff onboarded this month",
+    tone: "success",
+  },
+  {
+    label: "Expiring certifications",
+    value: "8",
+    helper: "Due within 30 days",
+    tone: "warning",
+  },
+  {
+    label: "Unresolved incidents",
+    value: "5",
+    helper: "2 marked high severity",
+    tone: "danger",
+  },
+  {
+    label: "Pending evaluations",
+    value: "13",
+    helper: "Across 4 active programs",
+    tone: "neutral",
+  },
+];
+
+export const staffProfiles: StaffProfile[] = [
+  {
+    id: "staff-1",
+    fullName: "Avery Johnson",
+    role: "Lead Facilitator",
+    status: "active",
+    site: "Redwood Day Camp",
+    email: "avery@example.org",
+    phone: "(555) 010-4211",
+    backgroundCheck: "clear",
+    sickLeaveDays: 2,
+    notes: "Strong with middle-school groups. Pair with new facilitators for onboarding.",
+    evaluationTrend: [4.1, 4.4, 4.6, 4.7],
+    certifications: [
+      {
+        id: "cert-1",
+        name: "CPR / First Aid",
+        expiresAt: "2026-07-12",
+        status: "expiring",
+      },
+      {
+        id: "cert-2",
+        name: "Mandated Reporter",
+        expiresAt: "2027-01-15",
+        status: "current",
+      },
+    ],
+  },
+  {
+    id: "staff-2",
+    fullName: "Malik Carter",
+    role: "Facilitator",
+    status: "seasonal",
+    site: "Harbor Outdoor School",
+    email: "malik@example.org",
+    phone: "(555) 010-8920",
+    backgroundCheck: "pending",
+    sickLeaveDays: 0,
+    notes: "Needs final background check before overnight sessions.",
+    evaluationTrend: [3.8, 4.0, 4.2],
+    certifications: [
+      {
+        id: "cert-3",
+        name: "Water Safety",
+        expiresAt: "2026-11-03",
+        status: "current",
+      },
+    ],
+  },
+  {
+    id: "staff-3",
+    fullName: "Sofia Nguyen",
+    role: "Site Lead",
+    status: "active",
+    site: "Redwood Day Camp",
+    email: "sofia@example.org",
+    phone: "(555) 010-1198",
+    backgroundCheck: "clear",
+    sickLeaveDays: 1,
+    notes: "Best reviewer for complex incident debriefs.",
+    evaluationTrend: [4.5, 4.6, 4.8],
+    certifications: [
+      {
+        id: "cert-4",
+        name: "Crisis Prevention",
+        expiresAt: "2026-06-22",
+        status: "expiring",
+      },
+    ],
+  },
+];
+
+export const incidents: Incident[] = [
+  {
+    id: "incident-1",
+    title: "Camper allergy response",
+    site: "Redwood Day Camp",
+    severity: "high",
+    status: "in_review",
+    occurredAt: "2026-06-05T14:20:00Z",
+    involvedStaff: ["Avery Johnson", "Sofia Nguyen"],
+    description:
+      "Staff followed allergy protocol and parent communication is pending final review.",
+    followUpOwner: "Sofia Nguyen",
+    followUpDue: "2026-06-10",
+  },
+  {
+    id: "incident-2",
+    title: "Equipment storage issue",
+    site: "Harbor Outdoor School",
+    severity: "medium",
+    status: "open",
+    occurredAt: "2026-06-07T18:10:00Z",
+    involvedStaff: ["Malik Carter"],
+    description:
+      "Climbing equipment was returned without full checklist confirmation.",
+    followUpOwner: "Program Manager",
+    followUpDue: "2026-06-12",
+  },
+];
+
+export const evaluations: Evaluation[] = [
+  {
+    id: "eval-1",
+    staffId: "staff-1",
+    staffName: "Avery Johnson",
+    evaluator: "Sofia Nguyen",
+    submittedAt: "2026-06-04T16:30:00Z",
+    score: 4.7,
+    rubric: {
+      safety: 5,
+      engagement: 5,
+      preparedness: 4,
+      inclusion: 5,
+    },
+    summary:
+      "Excellent group management and strong adaptation when weather changed.",
+  },
+  {
+    id: "eval-2",
+    staffId: "staff-2",
+    staffName: "Malik Carter",
+    evaluator: "Avery Johnson",
+    submittedAt: "2026-06-06T19:05:00Z",
+    score: 4.2,
+    rubric: {
+      safety: 4,
+      engagement: 4,
+      preparedness: 4,
+      inclusion: 5,
+    },
+    summary:
+      "Positive rapport with campers. Needs checklist reinforcement before field sessions.",
+  },
+];
+
+export const surveyTemplates: SurveyTemplate[] = [
+  {
+    id: "survey-1",
+    name: "Middle School Outdoor Reflection",
+    school: "Lincoln Middle School",
+    programType: "Outdoor leadership",
+    ageGroup: "11-13",
+    questionCount: 8,
+    reuseCount: 12,
+    lastUsedAt: "2026-05-28",
+  },
+  {
+    id: "survey-2",
+    name: "Elementary Teamwork Pulse",
+    school: "Cedar Elementary",
+    programType: "Team building",
+    ageGroup: "8-10",
+    questionCount: 6,
+    reuseCount: 7,
+    lastUsedAt: "2026-06-02",
+  },
+];
+
+export const aiSuggestions: AISuggestion[] = [
+  {
+    id: "ai-1",
+    kind: "survey",
+    prompt: "Age 11-13, outdoor leadership, confidence and inclusion",
+    output:
+      "Draft survey with reflection, safety comfort, teamwork, and facilitator feedback questions.",
+    status: "saved",
+    createdAt: "2026-06-03T10:15:00Z",
+  },
+  {
+    id: "ai-2",
+    kind: "activity",
+    prompt: "Ages 8-10, low-risk rainy day team building",
+    output:
+      "Indoor knot circle, silent lineup, and collaborative shelter-design prompts.",
+    status: "draft",
+    createdAt: "2026-06-08T09:00:00Z",
+  },
+];
