@@ -89,7 +89,7 @@ export async function AppSidebar() {
 
   return (
     <>
-      <MobileAppMenu account={account} />
+      <MobileAppMenu />
 
       <aside className="hidden min-h-screen w-72 shrink-0 flex-col border-r border-border bg-white/80 p-6 lg:flex">
         <div>
