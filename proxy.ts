@@ -12,6 +12,20 @@ const protectedRoutes = [
   "/settings",
 ];
 
+function isSupabaseAuthCookie(name: string) {
+  return name.startsWith("sb-") && name.includes("auth-token");
+}
+
+function clearSupabaseAuthCookies(request: NextRequest, response: NextResponse) {
+  request.cookies
+    .getAll()
+    .filter((cookie) => isSupabaseAuthCookie(cookie.name))
+    .forEach((cookie) => {
+      request.cookies.delete(cookie.name);
+      response.cookies.set(cookie.name, "", { maxAge: 0, path: "/" });
+    });
+}
+
 export async function proxy(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -29,7 +43,7 @@ export async function proxy(request: NextRequest) {
       getAll() {
         return request.cookies.getAll();
       },
-      setAll(cookiesToSet) {
+      setAll(cookiesToSet, headers) {
         cookiesToSet.forEach(({ name, value }) =>
           request.cookies.set(name, value),
         );
@@ -39,23 +53,31 @@ export async function proxy(request: NextRequest) {
         cookiesToSet.forEach(({ name, value, options }) =>
           response.cookies.set(name, value, options),
         );
+        Object.entries(headers ?? {}).forEach(([key, value]) =>
+          response.headers.set(key, value),
+        );
       },
     },
   });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data, error } = await supabase.auth.getClaims();
+  const claims = data?.claims;
 
   const isProtected = protectedRoutes.some((route) =>
     request.nextUrl.pathname.startsWith(route),
   );
 
-  if (isProtected && !user) {
+  if (isProtected && (!claims || error)) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/login";
     redirectUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
-    return NextResponse.redirect(redirectUrl);
+
+    const redirectResponse = NextResponse.redirect(redirectUrl);
+    if (error?.code === "refresh_token_not_found") {
+      clearSupabaseAuthCookies(request, redirectResponse);
+    }
+
+    return redirectResponse;
   }
 
   return response;

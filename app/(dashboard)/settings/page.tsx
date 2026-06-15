@@ -10,16 +10,15 @@ const roles = Object.keys(roleLabels) as UserRole[];
 
 export default async function SettingsPage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
+  const { data } = supabase ? await supabase.auth.getClaims() : { data: null };
+  const claims = data?.claims;
 
   return (
     <PageShell
       title="Access controls"
       description="Role definitions, session state, audit expectations, and privacy controls for the operations platform."
       actions={
-        user ? (
+        claims ? (
           <Link
             href="/logout"
             className="inline-flex rounded-xl border border-border bg-white px-4 py-2 text-sm font-semibold"
@@ -46,7 +45,7 @@ export default async function SettingsPage() {
             <div className="rounded-xl bg-slate-50 p-4">
               <p className="font-medium">Signed-in user</p>
               <p className="mt-1 text-muted-foreground">
-                {user?.email ?? "Demo mode / no Supabase session"}
+                {claims?.email ?? "Demo mode / no Supabase session"}
               </p>
             </div>
             <div className="rounded-xl bg-slate-50 p-4">

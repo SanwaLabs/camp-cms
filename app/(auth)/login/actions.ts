@@ -3,10 +3,20 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
+function getSafeRedirectPath(path: string) {
+  if (!path.startsWith("/") || path.startsWith("//")) {
+    return "/dashboard";
+  }
+
+  return path;
+}
+
 export async function signIn(formData: FormData) {
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
-  const redirectTo = String(formData.get("redirectTo") ?? "/dashboard");
+  const redirectTo = getSafeRedirectPath(
+    String(formData.get("redirectTo") ?? "/dashboard"),
+  );
   const supabase = await createClient();
 
   if (!supabase) {

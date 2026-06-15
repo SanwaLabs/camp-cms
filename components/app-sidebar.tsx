@@ -46,11 +46,10 @@ async function getAccountSummary(): Promise<AccountSummary> {
     };
   }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
+  const claims = data?.claims;
 
-  if (!user) {
+  if (!claims?.sub) {
     return {
       email: "Not signed in",
       fullName: null,
@@ -62,7 +61,7 @@ async function getAccountSummary(): Promise<AccountSummary> {
   const { data: profile } = await supabase
     .from("profiles")
     .select("full_name, organization_id")
-    .eq("id", user.id)
+    .eq("id", claims.sub)
     .maybeSingle();
 
   let organizationName = "No organization assigned";
@@ -78,7 +77,7 @@ async function getAccountSummary(): Promise<AccountSummary> {
   }
 
   return {
-    email: user.email ?? "Signed-in user",
+    email: claims.email ?? "Signed-in user",
     fullName: profile?.full_name ?? null,
     organizationName,
     isAuthenticated: true,
