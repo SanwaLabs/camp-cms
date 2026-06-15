@@ -33,13 +33,22 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 The app can run in demo mode without Supabase env vars. Protected routes become
 enforced after Supabase keys are configured.
 
-## Supabase Boundary
+## Supabase Database
 
-Do not create or run migrations from this repository. Database setup is manual.
+Supabase schema changes are versioned in [`supabase/migrations`](supabase/migrations).
+The initial baseline creates the app schema, RLS policies, indexes, storage
+buckets, and audit logging tables described in
+[`docs/database-manual-setup.md`](docs/database-manual-setup.md).
 
-Use [`docs/database-manual-setup.md`](docs/database-manual-setup.md) as a
-reviewable reference for schema, RLS, indexes, storage buckets, and audit
-logging. Apply database changes manually in Supabase.
+Apply migrations with the Supabase CLI from a reviewed checkout:
+
+```bash
+supabase db reset
+```
+
+For a linked remote project, review the SQL first and then run the appropriate
+Supabase CLI migration command for that environment. Do not commit
+`supabase/.temp` or environment secrets.
 
 ## Deployment
 
@@ -47,7 +56,7 @@ Deploy the web app to Vercel:
 
 1. Import the repository into Vercel.
 2. Add the environment variables above to Preview and Production.
-3. Connect the app to the manually configured Supabase project.
+3. Connect the app to the migrated Supabase project.
 4. Confirm `/login`, `/dashboard`, `/api/reports/export`, and
    `/api/notifications/reminders` work in Preview.
 

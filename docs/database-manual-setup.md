@@ -1,8 +1,10 @@
-# Supabase Manual Database Setup
+# Supabase Database Setup
 
-This file is reference material for manual Supabase setup. Do not run it as a
-migration from this repository. Apply reviewed pieces manually in the Supabase
-SQL editor or your preferred database workflow.
+The executable database baseline lives in
+[`supabase/migrations/20260613033000_initial_schema.sql`](../supabase/migrations/20260613033000_initial_schema.sql).
+Use that migration file as the source of truth for schema, RLS, indexes, storage
+buckets, and audit logging. This document remains a review guide for the schema
+shape and launch checklist.
 
 ## Schema Outline
 
@@ -27,9 +29,9 @@ Core tables:
 - `ai_suggestion_logs`: AI prompt/output review trail.
 - `audit_logs`: append-only mutation, export, and file access trail.
 
-## Suggested SQL Reference
+## SQL Reference
 
-Use UUID primary keys and timestamps consistently:
+The migration uses UUID primary keys and timestamps consistently:
 
 ```sql
 create extension if not exists pgcrypto;
@@ -47,7 +49,7 @@ create type incident_severity as enum ('low', 'medium', 'high', 'critical');
 create type incident_status as enum ('open', 'in_review', 'closed');
 ```
 
-Recommended audit columns on business tables:
+Business tables use audit columns:
 
 ```sql
 id uuid primary key default gen_random_uuid(),
@@ -59,7 +61,7 @@ updated_by uuid references auth.users(id)
 
 ## RLS Policy Model
 
-Enable RLS on every table in `public`.
+The initial migration enables RLS on every table it creates in `public`.
 
 ```sql
 alter table public.profiles enable row level security;
@@ -70,7 +72,7 @@ alter table public.surveys enable row level security;
 alter table public.documents enable row level security;
 ```
 
-Recommended access model:
+Access model:
 
 - Admin: all rows in the organization.
 - Program Manager: create/edit staff, incidents, evaluations, surveys, and reports.
@@ -84,18 +86,18 @@ security definer functions in a private schema.
 
 ## Storage Buckets
 
-Recommended buckets:
+The migration creates these private buckets:
 
 - `staff-documents`: certification files, training records, background check artifacts.
 - `incident-attachments`: incident photos, PDFs, or follow-up evidence.
 - `exports`: generated leadership reports and audit-sensitive exports.
 
-Storage policies should mirror database permissions and keep background
-screening files visible only to Admin and Program Manager roles.
+Storage policies mirror database permissions and keep staff documents and
+incident attachments limited to privileged roles.
 
 ## Indexes
 
-Create indexes for the expected MVP filters:
+The migration creates indexes for the expected MVP filters:
 
 ```sql
 create index on public.staff_profiles (status);

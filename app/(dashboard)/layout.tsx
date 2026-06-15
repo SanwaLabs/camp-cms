@@ -3,7 +3,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen">
+    <div className="min-h-screen lg:flex">
       <AppSidebar />
       {children}
     </div>

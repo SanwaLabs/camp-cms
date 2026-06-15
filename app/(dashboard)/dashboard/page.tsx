@@ -32,7 +32,7 @@ export default function DashboardPage() {
       actions={
         <Link
           href="/incidents/new"
-          className="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+          className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-4 py-2 text-sm font-semibold text-foreground shadow-sm transition hover:bg-slate-50"
         >
           Log incident
         </Link>

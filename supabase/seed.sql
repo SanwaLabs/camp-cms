@@ -1,0 +1,6 @@
+-- Local seed hook for Supabase resets.
+--
+-- The app currently uses lib/mock-data.ts for demo data. Keep this file present
+-- because supabase/config.toml enables seeding with ./seed.sql.
+--
+-- Add local development rows here after creating matching auth users.
