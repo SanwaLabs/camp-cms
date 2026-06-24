@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   ChevronDown,
@@ -28,26 +28,49 @@ const navItems = [
 
 export function MobileAppMenu() {
   const detailsRef = useRef<HTMLDetailsElement>(null);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function handlePointerDown(event: PointerEvent) {
+      if (
+        detailsRef.current &&
+        !detailsRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [open]);
 
   function closeMenu() {
-    detailsRef.current?.removeAttribute("open");
+    setOpen(false);
   }
 
   return (
-    <header className="border-b border-border bg-white/90 px-4 py-4 lg:hidden">
+    <header className="sticky top-0 z-30 border-b border-border bg-white/90 px-4 py-4 backdrop-blur-sm lg:hidden">
       <div className="flex items-center justify-between gap-4">
         <Link href="/dashboard" className="min-w-0" onClick={closeMenu}>
           <h1 className="truncate text-lg font-bold text-foreground">Campist</h1>
         </Link>
 
-        <details ref={detailsRef} className="group relative">
-          <summary className="flex cursor-pointer list-none items-center gap-2 rounded-xl border border-border bg-white px-3 py-2 text-sm font-semibold shadow-sm [&::-webkit-details-marker]:hidden">
+        <details ref={detailsRef} open={open} className="group relative">
+          <summary
+            className="flex cursor-pointer list-none items-center gap-2 rounded-xl border border-border bg-white px-3 py-2 text-sm font-semibold shadow-sm [&::-webkit-details-marker]:hidden"
+            onClick={(event) => {
+              event.preventDefault();
+              setOpen((current) => !current);
+            }}
+          >
             <Menu className="h-4 w-4" />
             Menu
             <ChevronDown className="h-4 w-4 text-muted-foreground transition group-open:rotate-180" />
           </summary>
 
-          <div className="absolute right-0 z-10 mt-2 w-72 rounded-2xl border border-border bg-white p-3 shadow-soft">
+          <div className="absolute right-0 z-50 mt-2 w-72 rounded-2xl border border-border bg-white p-3 shadow-soft">
             <nav className="space-y-1">
               {navItems.map((item) => {
                 const Icon = item.icon;

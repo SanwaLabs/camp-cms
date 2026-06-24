@@ -54,3 +54,117 @@ a {
 .bg-primary {
   color: hsl(var(--primary-foreground));
 }
+
+@keyframes camp-blob-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(3%, -4%) scale(1.05);
+  }
+  50% {
+    transform: translate(-2%, 3%) scale(0.97);
+  }
+  75% {
+    transform: translate(4%, 2%) scale(1.03);
+  }
+}
+
+@keyframes camp-blob-morph {
+  0%,
+  100% {
+    border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%;
+  }
+  33% {
+    border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%;
+  }
+  66% {
+    border-radius: 55% 45% 60% 40% / 40% 60% 45% 55%;
+  }
+}
+
+.camp-blob {
+  position: absolute;
+  filter: blur(100px);
+  opacity: 0.5;
+  animation:
+    camp-blob-drift var(--camp-blob-duration, 22s) ease-in-out infinite,
+    camp-blob-morph calc(var(--camp-blob-duration, 22s) * 1.4) ease-in-out
+      infinite;
+  animation-delay: var(--camp-blob-delay, 0s);
+  will-change: transform;
+}
+
+.camp-blob-1 {
+  --camp-blob-duration: 24s;
+  --camp-blob-delay: 0s;
+  top: -8%;
+  left: -5%;
+  width: 28rem;
+  height: 28rem;
+  background: radial-gradient(circle, rgb(186 230 253 / 0.9), transparent 70%);
+}
+
+.camp-blob-2 {
+  --camp-blob-duration: 20s;
+  --camp-blob-delay: -4s;
+  top: 10%;
+  right: -10%;
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(
+    circle,
+    rgb(167 243 208 / 0.85),
+    transparent 70%
+  );
+}
+
+.camp-blob-3 {
+  --camp-blob-duration: 26s;
+  --camp-blob-delay: -8s;
+  bottom: 5%;
+  left: 15%;
+  width: 30rem;
+  height: 30rem;
+  background: radial-gradient(
+    circle,
+    rgb(254 215 170 / 0.8),
+    transparent 70%
+  );
+}
+
+.camp-blob-4 {
+  --camp-blob-duration: 22s;
+  --camp-blob-delay: -12s;
+  bottom: -5%;
+  right: 5%;
+  width: 26rem;
+  height: 26rem;
+  background: radial-gradient(
+    circle,
+    rgb(153 246 228 / 0.75),
+    transparent 70%
+  );
+}
+
+.camp-blob-5 {
+  --camp-blob-duration: 28s;
+  --camp-blob-delay: -6s;
+  top: 40%;
+  left: 35%;
+  width: 22rem;
+  height: 22rem;
+  opacity: 0.35;
+  background: radial-gradient(
+    circle,
+    rgb(221 214 254 / 0.7),
+    transparent 70%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .camp-blob {
+    animation: none;
+  }
+}
