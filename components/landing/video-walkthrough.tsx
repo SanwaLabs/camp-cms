@@ -1,9 +1,7 @@
 import { Play } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
-export function VideoWalkthrough() {
-  const videoId = process.env.NEXT_PUBLIC_YOUTUBE_WALKTHROUGH_ID?.trim();
-
+export function VideoWalkthrough({ videoId }: { videoId?: string }) {
   return (
     <section id="walkthrough" className="scroll-mt-24">
       <div className="mb-8 text-center">

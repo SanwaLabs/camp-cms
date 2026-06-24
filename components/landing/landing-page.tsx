@@ -41,8 +41,10 @@ const features = [
 
 export function LandingPage({
   isAuthenticated,
+  walkthroughVideoId,
 }: {
   isAuthenticated: boolean;
+  walkthroughVideoId?: string;
 }) {
   return (
     <div className="flex min-h-screen flex-col">
@@ -131,7 +133,7 @@ export function LandingPage({
         </section>
 
         <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-8 sm:pb-24">
-          <VideoWalkthrough />
+          <VideoWalkthrough videoId={walkthroughVideoId} />
         </section>
       </main>
 
