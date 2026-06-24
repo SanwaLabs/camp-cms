@@ -35,7 +35,7 @@ export default async function SettingsPage() {
         )
       }
     >
-      <div className="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
+      <div className="flex flex-col gap-6 xl:grid xl:min-w-0 xl:grid-cols-[0.8fr_1.2fr]">
         <Card>
           <CardHeader
             title="Account state"

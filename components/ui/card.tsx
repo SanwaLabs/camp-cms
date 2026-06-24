@@ -8,7 +8,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-border bg-card p-6 shadow-soft",
+        "w-full max-w-full min-w-0 overflow-x-hidden rounded-2xl border border-border bg-card p-4 shadow-soft sm:p-6",
         className,
       )}
       {...props}
@@ -26,11 +26,11 @@ export function CardHeader({
   action?: ReactNode;
 }) {
   return (
-    <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-      <div>
-        <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+    <div className="mb-5 flex min-w-0 flex-col gap-3 md:flex-row md:items-start md:justify-between">
+      <div className="min-w-0">
+        <h2 className="text-lg font-semibold break-words text-foreground">{title}</h2>
         {description ? (
-          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+          <p className="mt-1 text-sm break-words text-muted-foreground">{description}</p>
         ) : null}
       </div>
       {action}

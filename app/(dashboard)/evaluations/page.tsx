@@ -19,7 +19,7 @@ export default function EvaluationsPage() {
         </Link>
       }
     >
-      <div className="grid gap-6 xl:grid-cols-[1fr_0.8fr]">
+      <div className="flex flex-col gap-6 xl:grid xl:min-w-0 xl:grid-cols-[1fr_0.8fr]">
         <Card>
           <CardHeader
             title="Recent submissions"

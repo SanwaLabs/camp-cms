@@ -30,7 +30,7 @@ export default function DashboardPage() {
   );
 
   return (
-    <div className="relative min-h-screen flex-1">
+    <div className="relative min-h-screen w-full min-w-0 flex-1">
       <CampDawnBackground />
       <div className="relative">
         <PageShell
@@ -45,7 +45,7 @@ export default function DashboardPage() {
             </Link>
           }
         >
-          <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <section className="grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-4">
             {dashboardMetrics.map((metric) => (
               <Card key={metric.label} className={glassCard}>
                 <Badge variant={toneToBadge[metric.tone]}>{metric.label}</Badge>
@@ -57,7 +57,7 @@ export default function DashboardPage() {
             ))}
           </section>
 
-          <section className="mt-6 grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+          <section className="mt-6 flex flex-col gap-6 xl:grid xl:min-w-0 xl:grid-cols-[1.2fr_0.8fr]">
             <Card className={glassCard}>
               <CardHeader
                 title="Open incident queue"
@@ -65,7 +65,7 @@ export default function DashboardPage() {
                 action={
                   <Link
                     href="/incidents"
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-foreground"
+                    className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-foreground"
                   >
                     View all <ArrowRight className="h-4 w-4" />
                   </Link>
@@ -75,19 +75,21 @@ export default function DashboardPage() {
                 {incidents.map((incident) => (
                   <div
                     key={incident.id}
-                    className={`rounded-2xl border border-border p-4 ${glassPanel}`}
+                    className={`min-w-0 overflow-hidden rounded-2xl border border-border p-4 ${glassPanel}`}
                   >
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <AlertTriangle className="h-4 w-4 text-amber-600" />
-                          <h3 className="font-semibold">{incident.title}</h3>
+                    <div className="flex min-w-0 flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                      <div className="min-w-0">
+                        <div className="flex min-w-0 items-start gap-2">
+                          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
+                          <h3 className="min-w-0 font-semibold break-words">
+                            {incident.title}
+                          </h3>
                         </div>
-                        <p className="mt-1 text-sm text-muted-foreground">
+                        <p className="mt-1 text-sm break-words text-muted-foreground">
                           {incident.site} · {formatDate(incident.occurredAt)}
                         </p>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex shrink-0 flex-wrap gap-2">
                         <Badge
                           variant={
                             incident.severity === "high" ||
@@ -101,10 +103,10 @@ export default function DashboardPage() {
                         <Badge>{incident.status.replace("_", " ")}</Badge>
                       </div>
                     </div>
-                    <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    <p className="mt-3 text-sm leading-6 break-words text-muted-foreground">
                       {incident.description}
                     </p>
-                    <p className="mt-3 text-sm font-medium">
+                    <p className="mt-3 text-sm font-medium break-words">
                       Follow-up: {incident.followUpOwner} ·{" "}
                       {formatRelativeDueDate(incident.followUpDue)}
                     </p>
@@ -113,7 +115,7 @@ export default function DashboardPage() {
               </div>
             </Card>
 
-            <div className="space-y-6">
+            <div className="flex w-full min-w-0 flex-col gap-6">
               <Card className={glassCard}>
                 <CardHeader
                   title="Certification risk"
@@ -123,15 +125,17 @@ export default function DashboardPage() {
                   {expiringCerts.map(({ staff, cert }) => (
                     <div
                       key={`${staff.id}-${cert.id}`}
-                      className={`flex items-center justify-between gap-4 rounded-xl p-3 ${glassPanel}`}
+                      className={`flex min-w-0 items-start justify-between gap-4 rounded-xl p-3 ${glassPanel}`}
                     >
-                      <div>
-                        <p className="font-medium">{staff.fullName}</p>
-                        <p className="text-sm text-muted-foreground">
+                      <div className="min-w-0">
+                        <p className="font-medium break-words">{staff.fullName}</p>
+                        <p className="text-sm break-words text-muted-foreground">
                           {cert.name} · expires {formatDate(cert.expiresAt)}
                         </p>
                       </div>
-                      <Badge variant="warning">{cert.status}</Badge>
+                      <Badge className="shrink-0" variant="warning">
+                        {cert.status}
+                      </Badge>
                     </div>
                   ))}
                 </div>
@@ -147,18 +151,18 @@ export default function DashboardPage() {
                     <Link
                       href={`/staff/${evaluation.staffId}`}
                       key={evaluation.id}
-                      className={`flex items-center gap-3 rounded-xl p-3 transition hover:bg-white/80 ${glassPanel}`}
+                      className={`flex min-w-0 items-center gap-3 rounded-xl p-3 transition hover:bg-white/80 ${glassPanel}`}
                     >
-                      <div className="rounded-xl bg-white/80 p-2 text-primary backdrop-blur-sm">
+                      <div className="shrink-0 rounded-xl bg-white/80 p-2 text-primary backdrop-blur-sm">
                         <ClipboardCheck className="h-4 w-4" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="font-medium">{evaluation.staffName}</p>
+                        <p className="font-medium break-words">{evaluation.staffName}</p>
                         <p className="truncate text-sm text-muted-foreground">
                           {evaluation.summary}
                         </p>
                       </div>
-                      <Badge variant="success">
+                      <Badge className="shrink-0" variant="success">
                         {evaluation.score.toFixed(1)}
                       </Badge>
                     </Link>
@@ -171,16 +175,16 @@ export default function DashboardPage() {
                   title="Staff status"
                   description="Quick segmentation for active operations."
                 />
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid min-w-0 grid-cols-2 gap-3">
                   {["active", "seasonal", "inactive", "alumni"].map(
                     (status) => (
                       <div
                         key={status}
-                        className={`rounded-xl p-3 ${glassPanel}`}
+                        className={`min-w-0 rounded-xl p-3 ${glassPanel}`}
                       >
-                        <div className="flex items-center gap-2">
-                          <Users className="h-4 w-4 text-muted-foreground" />
-                          <p className="text-sm capitalize text-muted-foreground">
+                        <div className="flex min-w-0 items-center gap-2">
+                          <Users className="h-4 w-4 shrink-0 text-muted-foreground" />
+                          <p className="min-w-0 truncate text-sm capitalize text-muted-foreground">
                             {status}
                           </p>
                         </div>

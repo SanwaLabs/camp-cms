@@ -40,7 +40,7 @@ export default function StaffPage() {
           title="Directory"
           description="MVP list view for active, inactive, seasonal, and alumni staff."
         />
-        <div className="overflow-hidden rounded-2xl border border-border">
+        <div className="overflow-x-auto rounded-2xl border border-border">
           <table className="w-full min-w-[760px] text-left text-sm">
             <thead className="bg-slate-50 text-xs uppercase tracking-wide text-muted-foreground">
               <tr>

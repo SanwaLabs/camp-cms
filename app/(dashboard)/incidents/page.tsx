@@ -30,14 +30,14 @@ export default function IncidentsPage() {
               key={incident.id}
               className="rounded-2xl border border-border p-5"
             >
-              <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                <div>
-                  <h2 className="text-lg font-semibold">{incident.title}</h2>
-                  <p className="mt-1 text-sm text-muted-foreground">
+              <div className="flex min-w-0 flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                <div className="min-w-0">
+                  <h2 className="text-lg font-semibold break-words">{incident.title}</h2>
+                  <p className="mt-1 text-sm break-words text-muted-foreground">
                     {incident.site} · {formatDate(incident.occurredAt)}
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex shrink-0 flex-wrap gap-2">
                   <Badge
                     variant={
                       incident.severity === "high" ||
@@ -51,7 +51,7 @@ export default function IncidentsPage() {
                   <Badge>{incident.status.replace("_", " ")}</Badge>
                 </div>
               </div>
-              <p className="mt-4 text-sm leading-6 text-muted-foreground">
+              <p className="mt-4 text-sm leading-6 break-words text-muted-foreground">
                 {incident.description}
               </p>
               <div className="mt-4 grid gap-3 text-sm md:grid-cols-3">

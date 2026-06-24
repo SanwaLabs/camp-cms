@@ -38,7 +38,7 @@ export default async function StaffDetailPage({
         </Link>
       }
     >
-      <section className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+      <section className="flex flex-col gap-6 lg:grid lg:min-w-0 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="space-y-6">
           <Card>
             <CardHeader title="Profile" description="Current staff record." />

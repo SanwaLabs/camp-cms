@@ -12,7 +12,7 @@ export default function AiPage() {
       title="AI assistant"
       description="Generate editable survey drafts, icebreakers, team-building activities, and session prompts with age and risk guardrails."
     >
-      <div className="grid gap-6 xl:grid-cols-[1fr_0.8fr]">
+      <div className="flex flex-col gap-6 xl:grid xl:min-w-0 xl:grid-cols-[1fr_0.8fr]">
         <Card>
           <CardHeader
             title="Generate draft"
