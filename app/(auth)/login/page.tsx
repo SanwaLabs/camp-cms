@@ -22,9 +22,9 @@ export default async function LoginPage({
           </div>
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              Secure access
+              Campist
             </p>
-            <h1 className="text-2xl font-bold">Sign in</h1>
+            <h1 className="text-2xl font-bold">Sign in to your workspace</h1>
           </div>
         </div>
 

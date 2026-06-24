@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Youth Ops Platform",
+  title: "Campist",
   description:
-    "Secure operations platform for youth program staff, incidents, evaluations, surveys, and AI support.",
+    "Connected camp operations for facilitators and managers — reporting, staff visibility, and cross-team coordination in one platform.",
 };
 
 export default function RootLayout({

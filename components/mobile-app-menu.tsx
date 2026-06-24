@@ -37,12 +37,7 @@ export function MobileAppMenu() {
     <header className="border-b border-border bg-white/90 px-4 py-4 lg:hidden">
       <div className="flex items-center justify-between gap-4">
         <Link href="/dashboard" className="min-w-0" onClick={closeMenu}>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            SanwaLabs
-          </p>
-          <h1 className="truncate text-lg font-bold text-foreground">
-            Youth Ops Platform
-          </h1>
+          <h1 className="truncate text-lg font-bold text-foreground">Campist</h1>
         </Link>
 
         <details ref={detailsRef} className="group relative">

@@ -94,12 +94,7 @@ export async function AppSidebar() {
       <aside className="hidden min-h-screen w-72 shrink-0 flex-col border-r border-border bg-white/80 p-6 lg:flex">
         <div>
           <Link href="/dashboard" className="block">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-              SanwaLabs
-            </p>
-            <h1 className="mt-2 text-2xl font-bold text-foreground">
-              Youth Ops Platform
-            </h1>
+            <h1 className="text-2xl font-bold text-foreground">Campist</h1>
           </Link>
 
           <nav className="mt-10 space-y-2">
