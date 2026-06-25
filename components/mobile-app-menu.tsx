@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
+  CalendarDays,
   ChevronDown,
   ClipboardCheck,
   FileBarChart,
@@ -18,6 +19,7 @@ import {
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
   { href: "/staff", label: "Staff", icon: Users },
+  { href: "/programs", label: "Programs", icon: CalendarDays },
   { href: "/incidents", label: "Incidents", icon: LifeBuoy },
   { href: "/evaluations", label: "Evaluations", icon: ClipboardCheck },
   { href: "/surveys", label: "Surveys", icon: FileBarChart },

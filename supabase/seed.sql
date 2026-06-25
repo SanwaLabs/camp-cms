@@ -4,3 +4,31 @@
 -- because supabase/config.toml enables seeding with ./seed.sql.
 --
 -- Add local development rows here after creating matching auth users.
+--
+-- Example programs + sessions (replace <org-id> with your organization UUID):
+--
+-- INSERT INTO public.programs (id, organization_id, name, program_type, status, starts_on, ends_on) VALUES
+--   ('11111111-1111-1111-1111-111111111101', '<org-id>', 'Summer', 'summer_camp', 'active', CURRENT_DATE - 21, CURRENT_DATE + 120),
+--   ('11111111-1111-1111-1111-111111111102', '<org-id>', 'Venture Out', 'expedition', 'active', CURRENT_DATE - 95, CURRENT_DATE + 270),
+--   ('11111111-1111-1111-1111-111111111103', '<org-id>', 'Day', 'day_camp', 'active', CURRENT_DATE - 3, CURRENT_DATE + 150),
+--   ('11111111-1111-1111-1111-111111111104', '<org-id>', 'Overnight', 'overnight', 'planned', CURRENT_DATE + 42, CURRENT_DATE + 365);
+--
+-- INSERT INTO public.sessions (organization_id, program_id, name, starts_at, ends_at, capacity) VALUES
+--   -- Past (5): ends_at < start of today
+--   ('<org-id>', '11111111-1111-1111-1111-111111111101', 'Week 1', (CURRENT_DATE - 21)::timestamptz, (CURRENT_DATE - 14)::timestamptz, 48),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111101', 'Week 2', (CURRENT_DATE - 14)::timestamptz, (CURRENT_DATE - 7)::timestamptz, 48),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111103', 'Spring Day Camp', (CURRENT_DATE - 3)::timestamptz, (CURRENT_DATE - 1)::timestamptz, 32),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111102', 'Spring Expedition', (CURRENT_DATE - 95)::timestamptz, (CURRENT_DATE - 90)::timestamptz, 24),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111104', 'Memorial Weekend', (CURRENT_DATE - 33)::timestamptz, (CURRENT_DATE - 30)::timestamptz, 36),
+--   -- Present (5): ends_at >= today AND starts_at <= today + 6 months
+--   ('<org-id>', '11111111-1111-1111-1111-111111111101', 'Week 3', (CURRENT_DATE - 3)::timestamptz, (CURRENT_DATE + 4)::timestamptz, 48),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111103', 'July Session A', (CURRENT_DATE + 14)::timestamptz, (CURRENT_DATE + 18)::timestamptz, 32),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111104', 'August Session', (CURRENT_DATE + 42)::timestamptz, (CURRENT_DATE + 46)::timestamptz, 36),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111102', 'Fall Outing', (CURRENT_DATE + interval '3 months'), (CURRENT_DATE + interval '3 months' + interval '4 days'), 24),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111103', 'November Session', (CURRENT_DATE + interval '5 months'), (CURRENT_DATE + interval '5 months' + interval '4 days'), 32),
+--   -- Future (5): starts_at > today + 6 months
+--   ('<org-id>', '11111111-1111-1111-1111-111111111101', 'Summer 2027 Kickoff', (CURRENT_DATE + interval '7 months'), (CURRENT_DATE + interval '7 months' + interval '6 days'), 48),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111102', 'Spring 2027 Expedition', (CURRENT_DATE + interval '9 months'), (CURRENT_DATE + interval '9 months' + interval '5 days'), 24),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111103', 'Winter 2027 Day Camp', (CURRENT_DATE + interval '8 months'), (CURRENT_DATE + interval '8 months' + interval '4 days'), 32),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111104', 'New Year 2027 Overnight', (CURRENT_DATE + 198)::timestamptz, (CURRENT_DATE + 201)::timestamptz, 36),
+--   ('<org-id>', '11111111-1111-1111-1111-111111111101', 'Early 2027 Session', (CURRENT_DATE + interval '10 months'), (CURRENT_DATE + interval '10 months' + interval '6 days'), 48);

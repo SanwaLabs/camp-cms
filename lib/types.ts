@@ -85,3 +85,23 @@ export type AISuggestion = {
   status: "draft" | "saved" | "discarded";
   createdAt: string;
 };
+
+export type ProgramTimeTab = "past" | "present" | "future";
+
+export type Program = {
+  id: string;
+  name: string;
+  programType: string;
+  status: "planned" | "active" | "completed" | "cancelled";
+  notes?: string;
+};
+
+export type ProgramSession = {
+  id: string;
+  programId: string;
+  name: string;
+  site: string;
+  startsAt: string;
+  endsAt: string;
+  capacity?: number;
+};

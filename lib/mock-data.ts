@@ -3,6 +3,8 @@ import type {
   DashboardMetric,
   Evaluation,
   Incident,
+  Program,
+  ProgramSession,
   StaffProfile,
   SurveyTemplate,
 } from "@/lib/types";
@@ -213,3 +215,191 @@ export const aiSuggestions: AISuggestion[] = [
     createdAt: "2026-06-08T09:00:00Z",
   },
 ];
+
+function addDays(date: Date, days: number): Date {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+function addMonths(date: Date, months: number): Date {
+  const result = new Date(date);
+  result.setMonth(result.getMonth() + months);
+  return result;
+}
+
+function sessionRange(
+  start: Date,
+  end: Date,
+): { startsAt: string; endsAt: string } {
+  return { startsAt: start.toISOString(), endsAt: end.toISOString() };
+}
+
+export function buildProgramFixtures(referenceDate = new Date()) {
+  const today = new Date(referenceDate);
+  today.setHours(0, 0, 0, 0);
+
+  const programs: Program[] = [
+    {
+      id: "program-summer",
+      name: "Summer",
+      programType: "summer_camp",
+      status: "active",
+      notes: "Multi-week summer camp with rotating outdoor themes.",
+    },
+    {
+      id: "program-venture-out",
+      name: "Venture Out",
+      programType: "expedition",
+      status: "active",
+      notes: "Multi-day expeditions and field-based learning.",
+    },
+    {
+      id: "program-day",
+      name: "Day",
+      programType: "day_camp",
+      status: "active",
+      notes: "Day-only sessions for elementary and middle school groups.",
+    },
+    {
+      id: "program-overnight",
+      name: "Overnight",
+      programType: "overnight",
+      status: "planned",
+      notes: "Residential overnight programs with cabin-based cohorts.",
+    },
+  ];
+
+  const sessions: ProgramSession[] = [
+    // Past (5) — ended yesterday or earlier
+    {
+      id: "session-past-1",
+      programId: "program-summer",
+      name: "Week 1",
+      site: "Redwood Day Camp",
+      capacity: 48,
+      ...sessionRange(addDays(today, -21), addDays(today, -14)),
+    },
+    {
+      id: "session-past-2",
+      programId: "program-summer",
+      name: "Week 2",
+      site: "Redwood Day Camp",
+      capacity: 48,
+      ...sessionRange(addDays(today, -14), addDays(today, -7)),
+    },
+    {
+      id: "session-past-3",
+      programId: "program-day",
+      name: "Spring Day Camp",
+      site: "Redwood Day Camp",
+      capacity: 32,
+      ...sessionRange(addDays(today, -3), addDays(today, -1)),
+    },
+    {
+      id: "session-past-4",
+      programId: "program-venture-out",
+      name: "Spring Expedition",
+      site: "Harbor Outdoor School",
+      capacity: 24,
+      ...sessionRange(addDays(today, -95), addDays(today, -90)),
+    },
+    {
+      id: "session-past-5",
+      programId: "program-overnight",
+      name: "Memorial Weekend",
+      site: "Harbor Outdoor School",
+      capacity: 36,
+      ...sessionRange(addDays(today, -33), addDays(today, -30)),
+    },
+    // Present (5) — active now or within 6 months
+    {
+      id: "session-present-1",
+      programId: "program-summer",
+      name: "Week 3",
+      site: "Redwood Day Camp",
+      capacity: 48,
+      ...sessionRange(addDays(today, -3), addDays(today, 4)),
+    },
+    {
+      id: "session-present-2",
+      programId: "program-day",
+      name: "July Session A",
+      site: "Redwood Day Camp",
+      capacity: 32,
+      ...sessionRange(addDays(today, 14), addDays(today, 18)),
+    },
+    {
+      id: "session-present-3",
+      programId: "program-overnight",
+      name: "August Session",
+      site: "Harbor Outdoor School",
+      capacity: 36,
+      ...sessionRange(addDays(today, 42), addDays(today, 46)),
+    },
+    {
+      id: "session-present-4",
+      programId: "program-venture-out",
+      name: "Fall Outing",
+      site: "Harbor Outdoor School",
+      capacity: 24,
+      ...sessionRange(addMonths(today, 3), addDays(addMonths(today, 3), 4)),
+    },
+    {
+      id: "session-present-5",
+      programId: "program-day",
+      name: "November Session",
+      site: "Redwood Day Camp",
+      capacity: 32,
+      ...sessionRange(addMonths(today, 5), addDays(addMonths(today, 5), 4)),
+    },
+    // Future (5) — starts 6+ months out
+    {
+      id: "session-future-1",
+      programId: "program-summer",
+      name: "Summer 2027 Kickoff",
+      site: "Redwood Day Camp",
+      capacity: 48,
+      ...sessionRange(addMonths(today, 7), addDays(addMonths(today, 7), 6)),
+    },
+    {
+      id: "session-future-2",
+      programId: "program-venture-out",
+      name: "Spring 2027 Expedition",
+      site: "Harbor Outdoor School",
+      capacity: 24,
+      ...sessionRange(addMonths(today, 9), addDays(addMonths(today, 9), 5)),
+    },
+    {
+      id: "session-future-3",
+      programId: "program-day",
+      name: "Winter 2027 Day Camp",
+      site: "Redwood Day Camp",
+      capacity: 32,
+      ...sessionRange(addMonths(today, 8), addDays(addMonths(today, 8), 4)),
+    },
+    {
+      id: "session-future-4",
+      programId: "program-overnight",
+      name: "New Year 2027 Overnight",
+      site: "Harbor Outdoor School",
+      capacity: 36,
+      ...sessionRange(addDays(today, 198), addDays(today, 201)),
+    },
+    {
+      id: "session-future-5",
+      programId: "program-summer",
+      name: "Early 2027 Session",
+      site: "Redwood Day Camp",
+      capacity: 48,
+      ...sessionRange(addMonths(today, 10), addDays(addMonths(today, 10), 6)),
+    },
+  ];
+
+  return { programs, sessions };
+}
+
+const programFixtures = buildProgramFixtures();
+
+export const programs = programFixtures.programs;
+export const programSessions = programFixtures.sessions;

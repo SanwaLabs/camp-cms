@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   Building2,
+  CalendarDays,
   ChevronDown,
   ClipboardCheck,
   FileBarChart,
@@ -19,6 +20,7 @@ import { createClient } from "@/lib/supabase/server";
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
   { href: "/staff", label: "Staff", icon: Users },
+  { href: "/programs", label: "Programs", icon: CalendarDays },
   { href: "/incidents", label: "Incidents", icon: LifeBuoy },
   { href: "/evaluations", label: "Evaluations", icon: ClipboardCheck },
   { href: "/surveys", label: "Surveys", icon: FileBarChart },
