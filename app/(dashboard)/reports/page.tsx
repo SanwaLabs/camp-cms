@@ -1,41 +1,27 @@
 import Link from "next/link";
-import { Card, CardHeader } from "@/components/ui/card";
+import { ReportsAiTab } from "@/components/reports/reports-ai-tab";
+import {
+  ReportsTabNav,
+  type ReportsTab,
+} from "@/components/reports/reports-tab-nav";
+import { ReportsTablesTab } from "@/components/reports/reports-tables-tab";
 import { PageShell } from "@/components/page-shell";
 
-export default function ReportsPage() {
+export default async function ReportsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>;
+}) {
+  const params = await searchParams;
+  const activeTab: ReportsTab = params.tab === "ai" ? "ai" : "tables";
+
   return (
     <PageShell
       title="Reports and exports"
-      description="Leadership-ready exports with audit expectations for sensitive records."
-      actions={
-        <Link
-          href="/api/reports/export"
-          className="inline-flex rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
-        >
-          Export CSV
-        </Link>
-      }
+      description=""
     >
-      <div className="grid gap-6 md:grid-cols-3">
-        {[
-          {
-            title: "Leadership review",
-            text: "Staff status, certification risk, incident queue, and evaluation completion.",
-          },
-          {
-            title: "Compliance review",
-            text: "Background check visibility, document access, audit events, and retention controls.",
-          },
-          {
-            title: "Program quality",
-            text: "Evaluation trends, survey reuse, response history, and manager dashboard usage.",
-          },
-        ].map((report) => (
-          <Card key={report.title}>
-            <CardHeader title={report.title} description={report.text} />
-          </Card>
-        ))}
-      </div>
+      <ReportsTabNav activeTab={activeTab} />
+      {activeTab === "ai" ? <ReportsAiTab /> : <ReportsTablesTab />}
     </PageShell>
   );
 }

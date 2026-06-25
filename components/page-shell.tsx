@@ -24,9 +24,6 @@ export function PageShell({
       <div className="mx-auto min-w-0 max-w-7xl">
         <header className="mb-8 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div className="min-w-0">
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              Campist
-            </p>
             <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground">
               {title}
             </h1>
