@@ -2,10 +2,11 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader } from "@/components/ui/card";
 import { PageShell } from "@/components/page-shell";
-import { incidents } from "@/lib/mock-data";
+import { getIncidents } from "@/lib/data/incidents";
 import { formatDate, formatRelativeDueDate } from "@/lib/utils";
 
-export default function IncidentsPage() {
+export default async function IncidentsPage() {
+  const incidents = await getIncidents();
   return (
     <PageShell
       title="Incident reporting"

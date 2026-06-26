@@ -2,7 +2,7 @@ import { ProgramsList } from "@/components/programs/programs-list";
 import { ProgramsTabNav } from "@/components/programs/programs-tab-nav";
 import { PageShell } from "@/components/page-shell";
 import { getProgramsForTab } from "@/lib/programs";
-import { programs, programSessions } from "@/lib/mock-data";
+import { getProgramSessions, getPrograms } from "@/lib/data/programs";
 import type { ProgramTimeTab } from "@/lib/types";
 
 function parseTab(tab: string | undefined): ProgramTimeTab {
@@ -20,6 +20,10 @@ export default async function ProgramsPage({
 }) {
   const params = await searchParams;
   const activeTab = parseTab(params.tab);
+  const [programs, programSessions] = await Promise.all([
+    getPrograms(),
+    getProgramSessions(),
+  ]);
   const programsForTab = getProgramsForTab(
     activeTab,
     programs,

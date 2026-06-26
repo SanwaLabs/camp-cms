@@ -1,7 +1,15 @@
 import { NextResponse } from "next/server";
-import { dashboardMetrics, incidents, staffProfiles } from "@/lib/mock-data";
+import { getDashboardMetrics } from "@/lib/data/dashboard";
+import { getIncidents } from "@/lib/data/incidents";
+import { getStaffProfiles } from "@/lib/data/staff";
 
 export async function GET() {
+  const [staffProfiles, dashboardMetrics, incidents] = await Promise.all([
+    getStaffProfiles(),
+    getDashboardMetrics(),
+    getIncidents(),
+  ]);
+
   const rows = [
     ["section", "label", "value", "notes"],
     ...dashboardMetrics.map((metric) => [

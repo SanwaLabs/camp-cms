@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader } from "@/components/ui/card";
 import { PageShell } from "@/components/page-shell";
-import { evaluations, incidents, staffProfiles } from "@/lib/mock-data";
+import { getEvaluations } from "@/lib/data/evaluations";
+import { getIncidents } from "@/lib/data/incidents";
+import { getStaffProfileById } from "@/lib/data/staff";
 import { formatDate } from "@/lib/utils";
 
 export default async function StaffDetailPage({
@@ -12,7 +14,11 @@ export default async function StaffDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const staff = staffProfiles.find((profile) => profile.id === id);
+  const [staff, evaluations, incidents] = await Promise.all([
+    getStaffProfileById(id),
+    getEvaluations(),
+    getIncidents(),
+  ]);
 
   if (!staff) {
     notFound();

@@ -46,35 +46,37 @@ export default async function LoginPage({
             </Link>
           </div>
         ) : (
-          <form action={signIn} className="space-y-4">
-            <input
-              type="hidden"
-              name="redirectTo"
-              value={params.redirectTo ?? "/dashboard"}
-            />
-            <label className="block text-sm font-medium">
-              Email
+          <>
+            <form action={signIn} className="space-y-4">
               <input
-                required
-                name="email"
-                type="email"
-                className="mt-2 w-full rounded-xl border-border"
-                placeholder="manager@example.org"
+                type="hidden"
+                name="redirectTo"
+                value={params.redirectTo ?? "/dashboard"}
               />
-            </label>
-            <label className="block text-sm font-medium">
-              Password
-              <input
-                required
-                name="password"
-                type="password"
-                className="mt-2 w-full rounded-xl border-border"
-              />
-            </label>
-            <Button className="w-full" type="submit">
-              Sign in
-            </Button>
-          </form>
+              <label className="block text-sm font-medium">
+                Email
+                <input
+                  required
+                  name="email"
+                  type="email"
+                  className="mt-2 w-full rounded-xl border-border"
+                  placeholder="you@example.com"
+                />
+              </label>
+              <label className="block text-sm font-medium">
+                Password
+                <input
+                  required
+                  name="password"
+                  type="password"
+                  className="mt-2 w-full rounded-xl border-border"
+                />
+              </label>
+              <Button className="w-full" type="submit">
+                Sign in
+              </Button>
+            </form>
+          </>
         )}
       </Card>
     </main>

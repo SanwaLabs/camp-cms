@@ -3,24 +3,40 @@ import { AiGenerator } from "@/components/ai-generator";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader } from "@/components/ui/card";
 import { PageShell } from "@/components/page-shell";
-import { aiSuggestions } from "@/lib/mock-data";
+import { getAiSuggestions } from "@/lib/data/ai";
 import { formatDate } from "@/lib/utils";
 
-export default function AiPage() {
+export default async function AiPage() {
+  const aiSuggestions = await getAiSuggestions();
   return (
     <PageShell
       title="AI assistant"
       description="Generate editable survey drafts, icebreakers, team-building activities, and session prompts with age and risk guardrails."
     >
       <div className="flex flex-col gap-6 xl:grid xl:min-w-0 xl:grid-cols-[1fr_0.8fr]">
-        <Card>
-          <CardHeader
-            title="Generate draft"
-            description="AI output is never final until a manager edits and saves it."
-            action={<Sparkles className="h-5 w-5 text-muted-foreground" />}
-          />
-          <AiGenerator />
-        </Card>
+        <div className="space-y-6">
+          <Card>
+            <CardHeader
+              title="Generate draft"
+              description="AI output is never final until a manager edits and saves it."
+              action={<Sparkles className="h-5 w-5 text-muted-foreground" />}
+            />
+            <AiGenerator />
+          </Card>
+
+          <Card className="border-dashed border-amber-200 bg-amber-50/60">
+            <CardHeader
+              title="Guided reports — coming soon"
+              description="One-click summaries for programs, incidents, staff compliance, and evaluation trends."
+            />
+            <p className="text-sm leading-6 text-muted-foreground">
+              Planned action buttons will generate specialized reports from live
+              org data and save outputs to the suggestion log. See{" "}
+              <code className="text-xs">docs/demo-princeton-blairstown-center.md</code>{" "}
+              for the full spec.
+            </p>
+          </Card>
+        </div>
 
         <Card>
           <CardHeader

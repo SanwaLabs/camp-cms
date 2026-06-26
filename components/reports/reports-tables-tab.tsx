@@ -2,13 +2,11 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ReportTableSection } from "@/components/reports/report-table-section";
-import {
-  dashboardMetrics,
-  evaluations,
-  incidents,
-  staffProfiles,
-  surveyTemplates,
-} from "@/lib/mock-data";
+import { getDashboardMetrics } from "@/lib/data/dashboard";
+import { getEvaluations } from "@/lib/data/evaluations";
+import { getIncidents } from "@/lib/data/incidents";
+import { getStaffProfiles } from "@/lib/data/staff";
+import { getSurveyTemplates } from "@/lib/data/surveys";
 import { formatDate, formatRelativeDueDate } from "@/lib/utils";
 
 const toneToBadge = {
@@ -23,7 +21,16 @@ const tableHead =
 const thClass = "px-4 py-3";
 const tdClass = "px-4 py-4";
 
-export function ReportsTablesTab() {
+export async function ReportsTablesTab() {
+  const [dashboardMetrics, staffProfiles, incidents, evaluations, surveyTemplates] =
+    await Promise.all([
+      getDashboardMetrics(),
+      getStaffProfiles(),
+      getIncidents(),
+      getEvaluations(),
+      getSurveyTemplates(),
+    ]);
+
   const certificationRows = staffProfiles
     .flatMap((staff) =>
       staff.certifications.map((cert) => ({

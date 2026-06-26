@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { PageShell } from "@/components/page-shell";
-import { staffProfiles } from "@/lib/mock-data";
+import { getStaffProfiles } from "@/lib/data/staff";
 
 const rubric = [
   "Safety",
@@ -11,7 +11,9 @@ const rubric = [
   "Communication",
 ];
 
-export default function NewEvaluationPage() {
+export default async function NewEvaluationPage() {
+  const staffProfiles = await getStaffProfiles();
+
   return (
     <PageShell
       title="Submit evaluation"

@@ -2,10 +2,11 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader } from "@/components/ui/card";
 import { PageShell } from "@/components/page-shell";
-import { evaluations } from "@/lib/mock-data";
+import { getEvaluations } from "@/lib/data/evaluations";
 import { formatDate } from "@/lib/utils";
 
-export default function EvaluationsPage() {
+export default async function EvaluationsPage() {
+  const evaluations = await getEvaluations();
   return (
     <PageShell
       title="Facilitator evaluations"

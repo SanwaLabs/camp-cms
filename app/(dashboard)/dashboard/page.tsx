@@ -4,12 +4,10 @@ import { CampDawnBackground } from "@/components/backgrounds/camp-dawn-backgroun
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader } from "@/components/ui/card";
 import { PageShell } from "@/components/page-shell";
-import {
-  dashboardMetrics,
-  evaluations,
-  incidents,
-  staffProfiles,
-} from "@/lib/mock-data";
+import { getDashboardMetrics } from "@/lib/data/dashboard";
+import { getEvaluations } from "@/lib/data/evaluations";
+import { getIncidents } from "@/lib/data/incidents";
+import { getStaffProfiles } from "@/lib/data/staff";
 import { formatDate, formatRelativeDueDate } from "@/lib/utils";
 
 const toneToBadge = {
@@ -22,7 +20,15 @@ const toneToBadge = {
 const glassCard = "border-white/60 bg-white/75 shadow-soft backdrop-blur-md";
 const glassPanel = "bg-white/60 backdrop-blur-sm";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const [dashboardMetrics, staffProfiles, incidents, evaluations] =
+    await Promise.all([
+      getDashboardMetrics(),
+      getStaffProfiles(),
+      getIncidents(),
+      getEvaluations(),
+    ]);
+
   const expiringCerts = staffProfiles.flatMap((staff) =>
     staff.certifications
       .filter((cert) => cert.status !== "current")

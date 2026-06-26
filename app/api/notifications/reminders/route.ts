@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
-import { staffProfiles, dashboardMetrics } from "@/lib/mock-data";
+import { getDashboardMetrics } from "@/lib/data/dashboard";
+import { getStaffProfiles } from "@/lib/data/staff";
 
 export async function GET() {
+  const [staffProfiles, dashboardMetrics] = await Promise.all([
+    getStaffProfiles(),
+    getDashboardMetrics(),
+  ]);
+
   const expiringCertifications = staffProfiles.flatMap((staff) =>
     staff.certifications
       .filter((certification) => certification.status !== "current")
@@ -12,16 +18,17 @@ export async function GET() {
       })),
   );
 
-  const pendingEvaluations =
-    dashboardMetrics.find((metric) => metric.label === "Pending evaluations")
-      ?.value ?? "0";
+  const pendingBackgroundChecks =
+    dashboardMetrics.find(
+      (metric) => metric.label === "Pending background checks",
+    )?.value ?? "0";
 
   return NextResponse.json({
     ok: true,
     mode: "dry-run",
     reminders: {
       expiringCertifications,
-      pendingEvaluations,
+      pendingBackgroundChecks,
     },
     nextStep:
       "Connect this route to an email provider after Supabase tables and audit logging are live.",

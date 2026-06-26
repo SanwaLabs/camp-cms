@@ -3,9 +3,10 @@ import { Search, SlidersHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader } from "@/components/ui/card";
 import { PageShell } from "@/components/page-shell";
-import { staffProfiles } from "@/lib/mock-data";
+import { getStaffProfiles } from "@/lib/data/staff";
 
-export default function StaffPage() {
+export default async function StaffPage() {
+  const staffProfiles = await getStaffProfiles();
   return (
     <PageShell
       title="Staff profiles"

@@ -50,6 +50,21 @@ For a linked remote project, review the SQL first and then run the appropriate
 Supabase CLI migration command for that environment. Do not commit
 `supabase/.temp` or environment secrets.
 
+## Demo data
+
+The app ships with a **Princeton-Blairstown Center** demo snapshot loaded via
+`supabase db reset`. Five role-based demo accounts (`@sanwalabs.ai`) let you
+explore the same dataset with different permissions.
+
+See [docs/demo-princeton-blairstown-center.md](docs/demo-princeton-blairstown-center.md)
+for the full walkthrough. Contact your admin for the demo password; local
+developers set `DEMO_USER_PASSWORD` in `.env.local` (see `.env.example`).
+
+```bash
+npm run db:reset
+npm run dev
+```
+
 ## Deployment
 
 Deploy the web app to Vercel:

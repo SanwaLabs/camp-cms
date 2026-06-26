@@ -2,10 +2,11 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader } from "@/components/ui/card";
 import { PageShell } from "@/components/page-shell";
-import { surveyTemplates } from "@/lib/mock-data";
+import { getSurveyTemplates } from "@/lib/data/surveys";
 import { formatDate } from "@/lib/utils";
 
-export default function SurveysPage() {
+export default async function SurveysPage() {
+  const surveyTemplates = await getSurveyTemplates();
   return (
     <PageShell
       title="Surveys and templates"

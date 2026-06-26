@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { PageShell } from "@/components/page-shell";
-import { staffProfiles } from "@/lib/mock-data";
+import { getStaffProfiles } from "@/lib/data/staff";
 
-export default function NewIncidentPage() {
+export default async function NewIncidentPage() {
+  const staffProfiles = await getStaffProfiles();
   return (
     <PageShell
       title="Log incident"
